@@ -28,6 +28,17 @@ func TestAtomicValueSwap(t *testing.T) {
 	}
 }
 
+func TestAtomicValueSwapNullInitial(t *testing.T) {
+	var av AtomicValue[int]
+	prev := av.Swap(20)
+	if prev != 0 {
+		t.Error("previous value should be 0")
+	}
+	if av.Load() != 20 {
+		t.Error("Atomic value not set correctly")
+	}
+}
+
 func TestAtomicValueCompareAndSwap(t *testing.T) {
 	av := NewAtomicValue(10)
 	if !av.CompareAndSwap(10, 20) {
