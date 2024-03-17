@@ -3,25 +3,25 @@ package types
 import "sync/atomic"
 
 type AtomicValue[T any] struct {
-	value atomic.Value
+	atomic.Value
 }
 
 func NewAtomicValue[T any](value T) AtomicValue[T] {
 	var av atomic.Value
 	av.Store(value)
-	return AtomicValue[T]{value: av}
+	return AtomicValue[T]{av}
 }
 
 func (av *AtomicValue[T]) Load() T {
-	return av.value.Load().(T)
+	return av.Value.Load().(T)
 }
 
 func (av *AtomicValue[T]) Store(value T) {
-	av.value.Store(value)
+	av.Value.Store(value)
 }
 
 func (av *AtomicValue[T]) Swap(value T) T {
-	oldValue := av.value.Swap(value)
+	oldValue := av.Value.Swap(value)
 	if oldValue == nil {
 		var zero T
 		return zero
@@ -31,5 +31,5 @@ func (av *AtomicValue[T]) Swap(value T) T {
 }
 
 func (av *AtomicValue[T]) CompareAndSwap(old T, new T) bool {
-	return av.value.CompareAndSwap(old, new)
+	return av.Value.CompareAndSwap(old, new)
 }
