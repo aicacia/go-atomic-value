@@ -1,4 +1,4 @@
-package types
+package atomicvalue
 
 import "sync/atomic"
 
