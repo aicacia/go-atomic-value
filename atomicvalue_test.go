@@ -48,3 +48,10 @@ func TestAtomicValueCompareAndSwap(t *testing.T) {
 		t.Error("Atomic value not set correctly")
 	}
 }
+
+func TestAtomicValueLoadNil(t *testing.T) {
+	av := AtomicValue[error]{}
+	if err := av.Load(); err != nil {
+		t.Error("Atomic value not set correctly")
+	}
+}

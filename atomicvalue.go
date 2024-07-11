@@ -13,7 +13,11 @@ func NewAtomicValue[T any](value T) AtomicValue[T] {
 }
 
 func (av *AtomicValue[T]) Load() T {
-	return av.Value.Load().(T)
+	value := av.Value.Load()
+	if value == nil {
+		return *new(T)
+	}
+	return value.(T)
 }
 
 func (av *AtomicValue[T]) Store(value T) {
